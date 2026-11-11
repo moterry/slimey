@@ -403,16 +403,17 @@ func writeVideo(copy: Copy, to url: URL) throws {
     if writer.status != .completed { throw writer.error ?? NSError(domain: "MakeVideo", code: 1) }
 }
 
-/// Smaller GIF for the README: 540px, 15 fps.
+/// Smaller GIF for the README: 540px, 15 fps. Skips the title card so the first frame (what shows
+/// before the GIF loads or plays) is the slime on a desktop rather than an empty background.
 func writeGIF(copy: Copy, to url: URL) {
-    let gifFPS = 15, gifSize = 540
-    let count = Int(duration * Double(gifFPS))
+    let gifFPS = 15, gifSize = 540, start = 2.4
+    let count = Int((duration - start) * Double(gifFPS))
     guard let dest = CGImageDestinationCreateWithURL(url as CFURL, UTType.gif.identifier as CFString, count, nil) else { return }
     CGImageDestinationSetProperties(dest, [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFLoopCount: 0]] as CFDictionary)
     let frameProps = [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFDelayTime: 1.0 / Double(gifFPS)]] as CFDictionary
     for frame in 0..<count {
         let ctx = makeContext()
-        renderFrame(t: Double(frame) / Double(gifFPS), copy: copy, into: ctx)
+        renderFrame(t: start + Double(frame) / Double(gifFPS), copy: copy, into: ctx)
         guard let full = ctx.makeImage(),
               let small = CGContext(data: nil, width: gifSize, height: gifSize, bitsPerComponent: 8, bytesPerRow: 0,
                                     space: CGColorSpace(name: CGColorSpace.sRGB)!,
