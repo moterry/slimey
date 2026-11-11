@@ -161,6 +161,9 @@ class SlimeView: NSView {
     override var isFlipped: Bool { true }
     override var isOpaque: Bool { false }
 
+    /// The video renderer hides the label on its title cards.
+    var showsLabel = true
+
     /// The live window needs a clear backing each frame; the video renderer draws over its own scene.
     var clearsBackground = true
 
@@ -201,7 +204,7 @@ class SlimeView: NSView {
         ctx.interpolationQuality = .none
         ctx.setShouldAntialias(false)
 
-        drawLabel(ctx)
+        if showsLabel { drawLabel(ctx) }
 
         let s = Self.scale
         let spriteWidth = CGFloat(SlimeArt.idle[0].count) * s
