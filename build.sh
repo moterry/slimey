@@ -32,5 +32,6 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </dict>
 </plist>
 PLIST
+xattr -cr "$APP"
 codesign --force --sign - "$APP"
 echo "Built $APP ($VERSION)"

@@ -10,7 +10,8 @@ enum HookInstaller {
 
     private static let fm = FileManager.default
     private static var home: URL { fm.homeDirectoryForCurrentUser }
-    static var settingsURL: URL { home.appendingPathComponent(".claude/settings.json") }
+    /// Resolved through symlinks, so dotfile setups keep their link and we edit the real file.
+    static var settingsURL: URL { home.appendingPathComponent(".claude/settings.json").resolvingSymlinksInPath() }
     static var scriptURL: URL { home.appendingPathComponent(".slimey/hook.sh") }
 
     static var isInstalled: Bool {

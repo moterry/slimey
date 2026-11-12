@@ -44,7 +44,9 @@ Right-click Slimey → **Launch at login**.
 
 ## Privacy
 
-Slimey talks to **claude.ai only**, using your own signed-in session, to read your usage. It has no server, no analytics and no telemetry. Everything else stays in local files on your Mac.
+Slimey itself only contacts **claude.ai**, using your own signed-in session, to read your usage. (The sign-in window is claude.ai's own page, so it loads whatever claude.ai and the sign-in provider you pick load.) Slimey has no server, no analytics and no telemetry. Everything else stays in local files on your Mac.
+
+To report a security problem, see [SECURITY.md](SECURITY.md).
 
 ## Disclaimer
 

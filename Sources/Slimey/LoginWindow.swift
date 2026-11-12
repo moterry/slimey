@@ -32,6 +32,12 @@ final class LoginWindow: NSObject, WKNavigationDelegate, NSWindowDelegate {
         window.makeKeyAndOrderFront(nil)
     }
 
+    /// There is no address bar, so the title always names the site being shown.
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        let host = webView.url?.host ?? "?"
+        window.title = L10n.t("Sign in to claude.ai for Slimey", "登录 claude.ai（给 Slimey 用）") + " — " + host
+    }
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url, url.host == "claude.ai" else { return }
         // Leaving /login (e.g. landing on /new) means the session cookie is set.

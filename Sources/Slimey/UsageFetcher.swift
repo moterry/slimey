@@ -118,7 +118,7 @@ final class UsageFetcher: NSObject, WKNavigationDelegate {
     private func poll() {
         guard pageReady, !inFlight else { return }
         inFlight = true
-        webView.callAsyncJavaScript(Self.fetchScript, arguments: [:], in: nil, in: .page) { [weak self] result in
+        webView.callAsyncJavaScript(Self.fetchScript, arguments: [:], in: nil, in: .defaultClient) { [weak self] result in
             guard let self else { return }
             self.inFlight = false
             switch result {
